@@ -45,12 +45,13 @@ public class TestDAO {
 		}
 	}
 
-	public ArrayList<testbean> selectDB() {
+//	public ArrayList<testbean> selectDB() 
+	public boolean selectDB() {
 		connect();
 		
-		String sql = "SELECT * FROM t1";
+		String sql = "SELECT @@server_id, c1, c2 FROM t1";
 		
-		ArrayList<testbean> list = new ArrayList<>();
+//		ArrayList<testbean> list = new ArrayList<>();
 		
 		testbean bean = null;
 
@@ -61,17 +62,21 @@ public class TestDAO {
 			
 			while (rs.next()) {
 				bean = new testbean();
-				bean.set_C1(rs.getString("c1"));
-				bean.set_C2(rs.getInt("c2"));
-
-				list.add(bean);
+				bean.setServer_id(rs.getString("@@server_id"));
+				bean.setC1(rs.getString("c1"));
+				bean.setC2(rs.getInt("c2"));
+								
+				System.out.println(bean.getServer_id() + " " + bean.getC1() + " " + bean.getC2());				
+				
+//				list.add(bean);
+				
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		} 
-		return list;
+//		return list;
+		return true;
 	}
 	
 	
