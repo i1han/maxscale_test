@@ -12,8 +12,14 @@ public class test{
 	// tdao.setDB("oracle");
 	// tdao.insertDB("dd",1242564);
 	
+	  
+	  for (int i = 0 ; i <= 3 ; i++) {
+		  
 	  tdao.selectDB();
- 	  
+	  
+	  Thread.sleep(2000);
+	  
+	  }
 	  
 	  
   }

@@ -13,17 +13,19 @@ public class TestDAO {
 	
     String host = "192.168.99.200:8888";
     String dbname = "test1";
-    String url = "jdbc:mariadb://" + host + "/" + dbname;
-    String username = "root";
-    String password = "root";
+    String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=false";
+    String username = "maxscale";
+    String password = "maxscale";
 	    
 	void connect() {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection(url, username, password);
-			
+
+			System.out.println("\n");
 			System.out.println("DB connected");
 		} catch (Exception e) {
+			System.out.println("\n");
 			System.out.println("DB connect failed");
 			e.printStackTrace();
 		} 
@@ -33,6 +35,8 @@ public class TestDAO {
 		if(pstmt != null) {
 			try {
 				pstmt.close();
+				System.out.println("\n");
+				System.out.println("DB closed");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -76,6 +80,7 @@ public class TestDAO {
 //				list.add(bean);
 				
 			}
+			disconnect();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
