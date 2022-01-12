@@ -21,6 +21,7 @@ public class TestDAO {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection(url, username, password);
+			
 			System.out.println("DB connected");
 		} catch (Exception e) {
 			System.out.println("DB connect failed");
@@ -47,7 +48,7 @@ public class TestDAO {
 
 //	public ArrayList<testbean> selectDB() 
 	public boolean selectDB() {
-		connect();
+		connect() ;
 		
 		String sql = "SELECT @@server_id, c1, c2 FROM t1";
 		
@@ -59,19 +60,22 @@ public class TestDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			ResultSet rs = pstmt.executeQuery(sql);
+
+			System.out.println("\n");
+			System.out.println("SERVER_ID C1  C2");
+			System.out.println("=================");
 			
 			while (rs.next()) {
 				bean = new testbean();
 				bean.setServer_id(rs.getString("@@server_id"));
 				bean.setC1(rs.getString("c1"));
 				bean.setC2(rs.getInt("c2"));
-								
-				System.out.println(bean.getServer_id() + " " + bean.getC1() + " " + bean.getC2());				
+				
+				System.out.println(bean.getServer_id() + "       " + bean.getC1() + "   " + bean.getC2());				
 				
 //				list.add(bean);
 				
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
