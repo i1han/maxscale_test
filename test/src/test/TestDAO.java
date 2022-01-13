@@ -14,16 +14,21 @@ public class TestDAO {
 	
     String host = "192.168.99.200:8888";
     String dbname = "test1";
-    String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=true";
+    String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=true"
+    		 + "&sessionVariables=autocommit=false&sessionVariables=sql_mode=ORACLE"
+    		;
+    
+    
     String username = "maxscale";
     String password = "maxscale";
+    
 	    
 	void connect() {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection(url, username, password);
 
-			System.out.println("\n");
+//			System.out.println("\n");
 			System.out.println("DB connected");
 		} catch (Exception e) {
 			System.out.println("\n");
@@ -36,7 +41,7 @@ public class TestDAO {
 		if(pstmt != null) {
 			try {
 				pstmt.close();
-				System.out.println("\n");
+//				System.out.println("\n");
 				System.out.println("DB closed");
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -54,8 +59,10 @@ public class TestDAO {
 //	public ArrayList<testbean> selectDB() 
 	public boolean selectDB() {
 		connect() ;
+	
+		System.out.println("\n"+url);
 		
-		String sql = "SELECT @@server_id, c1, c2 FROM t1";
+		String sql = "SELECT @@server_id, @@sql_mode, @@autocommit, c1, c2 FROM t1 limit 1";
 		
 //		ArrayList<testbean> list = new ArrayList<>();
 		
@@ -66,22 +73,25 @@ public class TestDAO {
 			
 			ResultSet rs = pstmt.executeQuery(sql);
 
-			System.out.println("\n");
-			System.out.println("SERVER_ID" + "\t" + "C1" + "\t" + "C2");
-			System.out.println("======================================");
 			
 			while (rs.next()) {
 				bean = new testbean();
 				bean.setServer_id(rs.getString("@@server_id"));
+				bean.setAutocommit(rs.getString("@@autocommit"));
+				bean.setSqlmode(rs.getString("@@sql_mode"));
 				bean.setC1(rs.getString("c1"));
 				bean.setC2(rs.getInt("c2"));
-				
-				System.out.println(bean.getServer_id() + "\t\t" + bean.getC1() + "\t" + bean.getC2());				
 				
 //				list.add(bean);
 				
 			}
+			System.out.println("\n"); 
+			System.out.println(String.format("%s\t%s\t%s", "SERVER_ID", "AUTO_COMMIT", "SQL_MODE"));
+			
+			System.out.println(String.format("%s\t\t%s\t\t%s", bean.getServer_id(), bean.getAutocommit(), bean.getSqlmode()));
+			
 			disconnect();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 

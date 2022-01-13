@@ -3,7 +3,11 @@ package test;
 public class testbean {
 	String c1;
 	int c2;
-
+	String server_id;
+	String port;
+	String user;
+	String sqlmode;
+	String autocommit;
 	
 	
 	public String getC1() {
@@ -37,9 +41,18 @@ public class testbean {
 	public void setUser(String user) {
 		this.user = user;
 	}
-	String server_id;
-	String port;
-	String user;
+	public String getSqlmode() {
+		return sqlmode;
+	}
+	public void setSqlmode(String sqlmode) {
+		this.sqlmode = sqlmode;
+	}
+	public String getAutocommit() {
+		return autocommit;
+	}
+	public void setAutocommit(String autocommit) {
+		this.autocommit = autocommit;
+	}
 	
 	
 	
