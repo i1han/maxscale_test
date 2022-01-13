@@ -15,7 +15,8 @@ public class TestDAO {
     String host = "192.168.99.200:8888";
     String dbname = "test1";
     String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=true"
-//    		 + "&sessionVariables=autocommit=false&sessionVariables=sql_mode=ORACLE"
+    		  + "&sessionVariables=sql_mode=ORACLE"
+    		+ "&autocommit=false"
     		;
     
     String username = "maxscale";
@@ -37,7 +38,6 @@ public class TestDAO {
 		if(pstmt != null) {
 			try {
 				pstmt.close();
-				System.out.println("DB closed");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -45,11 +45,11 @@ public class TestDAO {
 		if(conn != null) {
 			try {
 				conn.close();
-				System.out.println("DB closed");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("connect closed");
 	}
 
 //	public ArrayList<testbean> selectDB() 
@@ -68,7 +68,6 @@ public class TestDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			ResultSet rs = pstmt.executeQuery(sql);
-
 			
 			while (rs.next()) {
 				bean = new testbean();
@@ -81,8 +80,9 @@ public class TestDAO {
 //				list.add(bean);
 				
 			}
-			System.out.println(String.format("%s\t%s\t%s", "SERVER_ID", "AUTO_COMMIT", "SQL_MODE"));
 			
+			
+			System.out.println(String.format("%s\t%s\t%s", "SERVER_ID", "AUTO_COMMIT", "SQL_MODE"));
 			System.out.println(String.format("%s\t\t%s\t\t%s", bean.getServer_id(), bean.getAutocommit(), bean.getSqlmode()));
 			
 			disconnect();
