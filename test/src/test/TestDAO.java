@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class TestDAO {
 	Connection conn = null;
@@ -13,7 +14,7 @@ public class TestDAO {
 	
     String host = "192.168.99.200:8888";
     String dbname = "test1";
-    String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=false";
+    String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=true";
     String username = "maxscale";
     String password = "maxscale";
 	    
@@ -66,8 +67,8 @@ public class TestDAO {
 			ResultSet rs = pstmt.executeQuery(sql);
 
 			System.out.println("\n");
-			System.out.println("SERVER_ID C1  C2");
-			System.out.println("=================");
+			System.out.println("SERVER_ID" + "\t" + "C1" + "\t" + "C2");
+			System.out.println("======================================");
 			
 			while (rs.next()) {
 				bean = new testbean();
@@ -75,7 +76,7 @@ public class TestDAO {
 				bean.setC1(rs.getString("c1"));
 				bean.setC2(rs.getInt("c2"));
 				
-				System.out.println(bean.getServer_id() + "       " + bean.getC1() + "   " + bean.getC2());				
+				System.out.println(bean.getServer_id() + "\t\t" + bean.getC1() + "\t" + bean.getC2());				
 				
 //				list.add(bean);
 				
@@ -101,6 +102,8 @@ public class TestDAO {
 				
 			pstmt.executeUpdate();
 
+			System.out.println("data inserted");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -129,5 +132,24 @@ public class TestDAO {
 		}
 		return true;
 	}
+
+	
+	public String rand_str() {
+
+	    Random random = new Random();
+		
+	    int leftLimit = 48; // numeral '0'
+	    int rightLimit = 122; // letter 'z'
+	    int targetStringLength = 3;
+
+	    String generatedString = random.ints(leftLimit, rightLimit + 1)
+	      .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+	      .limit(targetStringLength)
+	      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+	      .toString();
+	    
+		return generatedString;
+	}
+
 	
 }

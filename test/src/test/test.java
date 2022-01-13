@@ -1,26 +1,25 @@
 package test;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 public class test{
 
   public static void main(String[] args) throws Exception
   {
-	  TestDAO tdao = new TestDAO();
+	TestDAO tdao = new TestDAO();
+	Random random = new Random();
+	    
+//	tdao.setDB("oracle");
+//	tdao.insertDB(tdao.rand_str(), random.nextInt(100000));
+
+//	tdao.selectDB();
 	  
-	  
-	// tdao.setDB("oracle");
-	// tdao.insertDB("dd",1242564);
-	
-	  
-	  for (int i = 0 ; i <= 3 ; i++) {
-		  
-	  tdao.selectDB();
-	  
-	  Thread.sleep(2000);
-	  
-	  }
-	  
+	for (int i = 0 ; i <= 100 ; i++) {
+		System.out.println("Num : " + i);
+		tdao.selectDB();  
+		Thread.sleep(1000);
+	}
+ 
 	  
   }
 }
