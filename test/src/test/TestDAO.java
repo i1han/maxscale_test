@@ -15,23 +15,19 @@ public class TestDAO {
     String host = "192.168.99.200:8888";
     String dbname = "test1";
     String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=true"
-    		 + "&sessionVariables=autocommit=false&sessionVariables=sql_mode=ORACLE"
+//    		 + "&sessionVariables=autocommit=false&sessionVariables=sql_mode=ORACLE"
     		;
-    
     
     String username = "maxscale";
     String password = "maxscale";
     
-	    
 	void connect() {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection(url, username, password);
-
-//			System.out.println("\n");
 			System.out.println("DB connected");
+			
 		} catch (Exception e) {
-			System.out.println("\n");
 			System.out.println("DB connect failed");
 			e.printStackTrace();
 		} 
@@ -41,7 +37,6 @@ public class TestDAO {
 		if(pstmt != null) {
 			try {
 				pstmt.close();
-//				System.out.println("\n");
 				System.out.println("DB closed");
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -50,6 +45,7 @@ public class TestDAO {
 		if(conn != null) {
 			try {
 				conn.close();
+				System.out.println("DB closed");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -60,7 +56,7 @@ public class TestDAO {
 	public boolean selectDB() {
 		connect() ;
 	
-		System.out.println("\n"+url);
+		System.out.println("\n"+url+"\n");
 		
 		String sql = "SELECT @@server_id, @@sql_mode, @@autocommit, c1, c2 FROM t1 limit 1";
 		
@@ -85,7 +81,6 @@ public class TestDAO {
 //				list.add(bean);
 				
 			}
-			System.out.println("\n"); 
 			System.out.println(String.format("%s\t%s\t%s", "SERVER_ID", "AUTO_COMMIT", "SQL_MODE"));
 			
 			System.out.println(String.format("%s\t\t%s\t\t%s", bean.getServer_id(), bean.getAutocommit(), bean.getSqlmode()));
@@ -143,7 +138,6 @@ public class TestDAO {
 		return true;
 	}
 
-	
 	public String rand_str() {
 
 	    Random random = new Random();
