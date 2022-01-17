@@ -14,8 +14,8 @@ public class TestDAO {
 	
     String host = "192.168.99.200:8888";
     String dbname = "test1";
-    String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=true"
-//    		  + "&sessionVariables=sql_mode=ORACLE"
+    String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=false"
+    		  + "&sessionVariables=sql_mode=ORACLE"
     		+ "&autocommit=false"
     		;
     
