@@ -14,9 +14,11 @@ public class TestDAO {
 	
     String host = "192.168.99.200:8888";
     String dbname = "test1";
-    String url = "jdbc:mariadb://" + host + "/" + dbname  + "?useServerPrepStmts=false"
-    		  + "&sessionVariables=sql_mode=ORACLE"
-    		+ "&autocommit=false"
+    String url = "jdbc:mariadb://" + host + "/" + dbname  // + "?useServerPrepStmts=true"
+//    String url = "jdbc:mariadb://" + host + "/" + dbname + "?rewriteBatchedStatements=true"
+//    		+ "&maxPoolSize=10&pool"
+//    		+ "&sessionVariables=sql_mode=ORACLE"
+//    		+ "&autocommit=false"
     		;
     
     String username = "maxscale";
@@ -82,10 +84,10 @@ public class TestDAO {
 			}
 			
 			
-			System.out.println(String.format("%s\t%s\t%s", "SERVER_ID", "AUTO_COMMIT", "SQL_MODE"));
+			System.out.println(String.format("%s\t%s\t%s", "SERVER_ID", "AUTOCOMMIT", "SQL_MODE"));
 			System.out.println(String.format("%s\t\t%s\t\t%s", bean.getServer_id(), bean.getAutocommit(), bean.getSqlmode()));
 			
-			disconnect();
+//			disconnect();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
