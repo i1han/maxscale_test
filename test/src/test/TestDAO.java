@@ -12,8 +12,8 @@ public class TestDAO {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	
-    String host = "192.168.99.200:8888";
-    String dbname = "test1";
+    String host = "192.168.1.129:8888";
+    String dbname = "test_db";
     String url = "jdbc:mariadb://" + host + "/" + dbname  // + "?useServerPrepStmts=true"
 //    String url = "jdbc:mariadb://" + host + "/" + dbname + "?rewriteBatchedStatements=true"
 //    		+ "&maxPoolSize=10&pool"
@@ -60,7 +60,7 @@ public class TestDAO {
 	
 		System.out.println("\n"+url+"\n");
 		
-		String sql = "SELECT @@server_id, @@sql_mode, @@autocommit, c1, c2 FROM t1 limit 1";
+		String sql = "SELECT @@server_id, @@sql_mode, @@autocommit FROM dual";
 		
 //		ArrayList<testbean> list = new ArrayList<>();
 		
@@ -76,8 +76,8 @@ public class TestDAO {
 				bean.setServer_id(rs.getString("@@server_id"));
 				bean.setAutocommit(rs.getString("@@autocommit"));
 				bean.setSqlmode(rs.getString("@@sql_mode"));
-				bean.setC1(rs.getString("c1"));
-				bean.setC2(rs.getInt("c2"));
+//				bean.setC1(rs.getString("c1"));
+//				bean.setC2(rs.getInt("c2"));
 				
 //				list.add(bean);
 				
@@ -97,21 +97,24 @@ public class TestDAO {
 	}
 	
 	
-	public boolean insertDB(String testbean1, int testbean2) {
+	public boolean insertDB(String testbean1, int testbean2) throws SQLException {
 		connect();
 		String sql = "insert into test1.t1 (c1, c2)" + "values (?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			conn.setAutoCommit(false);   //auto-commit false인 경우 executeUpdate 후 commit, catch에 rollback 필요
 			//pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			pstmt.setString(1, testbean1);
 			pstmt.setInt(2, testbean2);
 				
 			pstmt.executeUpdate();
+			conn.commit();
 
 			System.out.println("data inserted");
 			
 		} catch (SQLException e) {
+			conn.rollback();
 			e.printStackTrace();
 			return false;
 		} finally {
