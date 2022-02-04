@@ -104,7 +104,7 @@ public class TestDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			conn.setAutoCommit(false);   //auto-commit false인 경우 executeUpdate 후 commit, catch에 rollback 필요
-			//pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
 			pstmt.setString(1, testbean1);
 			pstmt.setInt(2, testbean2);
 				
